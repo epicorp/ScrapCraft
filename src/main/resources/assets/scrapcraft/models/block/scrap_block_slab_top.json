@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "scrapcraft:block/scrap_block",
+    "top": "scrapcraft:block/scrap_block",
+    "side": "scrapcraft:block/scrap_block"
+  }
+}

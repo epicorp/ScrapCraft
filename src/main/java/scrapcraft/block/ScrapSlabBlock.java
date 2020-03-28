@@ -23,14 +23,12 @@
  * THE SOFTWARE.
  */
 
-package scrapcraft.mixin;
+package scrapcraft.block;
 
-import net.minecraft.block.Material;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.gen.Invoker;
+import net.minecraft.block.SlabBlock;
 
-@Mixin(Material.Builder.class)
-public interface MaterialBuilderAccessor {
-	@Invoker("burnable")
-	Material.Builder accessor$burnable();
+public class ScrapSlabBlock extends SlabBlock implements ScrapLikeBlock {
+	public ScrapSlabBlock(Settings settings) {
+		super(settings);
+	}
 }

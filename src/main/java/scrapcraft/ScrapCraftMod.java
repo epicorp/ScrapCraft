@@ -26,10 +26,19 @@
 package scrapcraft;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.GenerationStep;
+import net.minecraft.world.gen.decorator.CountDecoratorConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import scrapcraft.feature.ScrapHeapFeatureConfig;
+import scrapcraft.registry.ScrapBlocks;
+import scrapcraft.registry.ScrapDecorators;
 import scrapcraft.registry.ScrapRegistry;
+import scrapcraft.registry.ScrapWorldFeatures;
 
 public class ScrapCraftMod implements ModInitializer {
 	public static final String MODID = "scrapcraft";
@@ -39,6 +48,36 @@ public class ScrapCraftMod implements ModInitializer {
 	public void onInitialize() {
 		LOGGER.info("One man's trash is another's treasure.");
 		ScrapRegistry.init();
+
+		// Register out feature to overworld like biomes
+		Registry.BIOME.stream()
+				.filter(ScrapCraftMod::isOverworldLike)
+				.forEach(ScrapCraftMod::addFeature);
+		// Register to new biomes afterwards
+		RegistryEntryAddedCallback.event(Registry.BIOME)
+				.register(ScrapCraftMod::checkAndAddToBiome);
+	}
+
+	private static void checkAndAddToBiome(int rawId, Identifier id, Biome biome) {
+		if (ScrapCraftMod.isOverworldLike(biome)) {
+			ScrapCraftMod.addFeature(biome);
+		}
+	}
+
+	private static boolean isOverworldLike(Biome biome) {
+		Biome.Category category = biome.getCategory();
+		return !(category == Biome.Category.NETHER || category == Biome.Category.THEEND || category == Biome.Category.NONE);
+	}
+
+	private static void addFeature(Biome biome) {
+		biome.addFeature(
+				GenerationStep.Feature.LOCAL_MODIFICATIONS,
+				ScrapWorldFeatures.SCRAP_HEAP_FEATURE.configure(
+						new ScrapHeapFeatureConfig(ScrapBlocks.DENSE_SCRAP_BLOCK.getDefaultState(), 0)
+				).createDecoratedFeature(
+						ScrapDecorators.SCRAP_HEAP.configure(new CountDecoratorConfig(2))
+				)
+		);
 	}
 
 	public static Identifier id(String path) {

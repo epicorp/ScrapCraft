@@ -1,0 +1,6 @@
+{
+  "parent": "scrapcraft:block/dense_scrap_block",
+  "textures": {
+    "layer0": "scrapcraft:item/dense_scrap_block"
+  }
+}

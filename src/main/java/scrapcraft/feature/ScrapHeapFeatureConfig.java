@@ -23,14 +23,38 @@
  * THE SOFTWARE.
  */
 
-package scrapcraft.mixin;
+package scrapcraft.feature;
 
-import net.minecraft.block.Material;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.gen.Invoker;
+import com.google.common.collect.ImmutableMap;
+import com.mojang.datafixers.Dynamic;
+import com.mojang.datafixers.types.DynamicOps;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.world.gen.feature.FeatureConfig;
 
-@Mixin(Material.Builder.class)
-public interface MaterialBuilderAccessor {
-	@Invoker("burnable")
-	Material.Builder accessor$burnable();
+public class ScrapHeapFeatureConfig implements FeatureConfig {
+	public final BlockState state;
+	public final int radius;
+
+	public ScrapHeapFeatureConfig(BlockState state, int radius) {
+		this.state = state;
+		this.radius = radius;
+	}
+
+	@Override
+	public <T> Dynamic<T> serialize(DynamicOps<T> ops) {
+		return new Dynamic<>(
+				ops, ops.createMap(
+						ImmutableMap.of(ops.createString("state"), BlockState.serialize(ops, this.state).getValue(),
+						ops.createString("radius"), ops.createInt(this.radius))
+				)
+		);
+	}
+
+	public static <T> ScrapHeapFeatureConfig deserialize(Dynamic<T> dynamic) {
+		BlockState blockState = dynamic.get("state").map(BlockState::deserialize).orElse(Blocks.AIR.getDefaultState());
+		int radius = dynamic.get("radius").asInt(0);
+
+		return new ScrapHeapFeatureConfig(blockState, radius);
+	}
 }

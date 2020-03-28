@@ -23,28 +23,35 @@
  * THE SOFTWARE.
  */
 
-package scrapcraft.mixin;
+package scrapcraft.feature;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FireBlock;
+import com.mojang.datafixers.Dynamic;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import scrapcraft.block.ScrapLikeBlock;
+import net.minecraft.world.Heightmap;
+import net.minecraft.world.IWorld;
+import net.minecraft.world.gen.chunk.ChunkGenerator;
+import net.minecraft.world.gen.chunk.ChunkGeneratorConfig;
+import net.minecraft.world.gen.decorator.CountDecoratorConfig;
+import net.minecraft.world.gen.decorator.Decorator;
 
 import java.util.Random;
+import java.util.function.Function;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
-@Mixin(FireBlock.class)
-public abstract class FireBlockMixin {
-	@Inject(at = @At(value = "INVOKE", shift = At.Shift.AFTER), method = "trySpreadingFire")
-	private void scrapcraft_handleScrapBurn(World world, BlockPos pos, int spreadFactor, Random rand, int currentAge, CallbackInfo ci) {
-		BlockState state = world.getBlockState(pos);
+public class ScrapHeapDecorator extends Decorator<CountDecoratorConfig> {
+	public ScrapHeapDecorator(Function<Dynamic<?>, ? extends CountDecoratorConfig> configDeserializer) {
+		super(configDeserializer);
+	}
 
-		if (state.getBlock() instanceof ScrapLikeBlock) {
-			// TODO: Handle Toxic fumes
-		}
+	@Override
+	public Stream<BlockPos> getPositions(IWorld world, ChunkGenerator<? extends ChunkGeneratorConfig> generator, Random random, CountDecoratorConfig config, BlockPos pos) {
+		int count = random.nextInt(config.count);
+		return IntStream.range(0, count).mapToObj((ix) -> {
+			int x = random.nextInt(16) + pos.getX();
+			int z = random.nextInt(16) + pos.getZ();
+			int y = world.getTopY(Heightmap.Type.MOTION_BLOCKING, x, z);
+			return new BlockPos(x, y, z);
+		});
 	}
 }

@@ -30,6 +30,7 @@ public final class ScrapRegistry {
 		ScrapItemSettings.init();
 		ScrapItems.init();
 		ScrapBlocks.init();
+		ScrapWorldFeatures.init();
 	}
 
 	private ScrapRegistry() {

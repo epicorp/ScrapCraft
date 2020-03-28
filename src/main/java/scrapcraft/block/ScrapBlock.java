@@ -27,7 +27,7 @@ package scrapcraft.block;
 
 import net.minecraft.block.Block;
 
-public class ScrapBlock extends Block {
+public class ScrapBlock extends Block implements ScrapLikeBlock {
 	public ScrapBlock(Settings settings) {
 		super(settings);
 	}

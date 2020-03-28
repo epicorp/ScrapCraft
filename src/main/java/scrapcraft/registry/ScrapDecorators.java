@@ -23,14 +23,27 @@
  * THE SOFTWARE.
  */
 
-package scrapcraft.mixin;
+package scrapcraft.registry;
 
-import net.minecraft.block.Material;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.gen.Invoker;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.world.gen.decorator.CountDecoratorConfig;
+import net.minecraft.world.gen.decorator.Decorator;
+import net.minecraft.world.gen.decorator.DecoratorConfig;
+import scrapcraft.ScrapCraftMod;
+import scrapcraft.feature.ScrapHeapDecorator;
 
-@Mixin(Material.Builder.class)
-public interface MaterialBuilderAccessor {
-	@Invoker("burnable")
-	Material.Builder accessor$burnable();
+public class ScrapDecorators {
+	public static final Decorator<CountDecoratorConfig> SCRAP_HEAP = register("scrap_heap", new ScrapHeapDecorator(CountDecoratorConfig::deserialize));
+
+	private static <T extends DecoratorConfig, G extends Decorator<T>> G register(String path, G decorator) {
+		return Registry.register(Registry.DECORATOR, ScrapCraftMod.id(path), decorator);
+	}
+
+	public static void init() {
+		// NO-OP
+	}
+
+	private ScrapDecorators() {
+		throw new AssertionError("You should not be instantiating this");
+	}
 }
