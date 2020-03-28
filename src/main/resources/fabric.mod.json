@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "scrapcraft",
+  "version": "${version}",
+
+  "name": "Scrap Craft",
+  "description": "One man's trash is another man's treasure.",
+  "authors": [
+  ],
+  "contact": {
+    "homepage": "",
+    "sources": ""
+  },
+
+  "license": "MIT",
+  "icon": "assets/scrapcraft/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "scrapcraft.ScrapCraftMod"
+    ],
+    "client": [
+      "scrapcraft.client.ScrapCraftClientMod"
+    ]
+  },
+  "mixins": [
+    "mixins.scrapcraft.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.7.2",
+    "fabric": "*"
+  }
+}
