@@ -27,6 +27,14 @@ package scrapcraft;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
+import net.fabricmc.fabric.api.loot.v1.FabricLootPoolBuilder;
+import net.fabricmc.fabric.api.loot.v1.FabricLootSupplierBuilder;
+import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
+import net.minecraft.loot.ConstantLootTableRange;
+import net.minecraft.loot.LootManager;
+import net.minecraft.loot.LootTables;
+import net.minecraft.loot.entry.ItemEntry;
+import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
@@ -37,6 +45,7 @@ import org.apache.logging.log4j.Logger;
 import scrapcraft.feature.ScrapHeapFeatureConfig;
 import scrapcraft.registry.ScrapBlocks;
 import scrapcraft.registry.ScrapDecorators;
+import scrapcraft.registry.ScrapItems;
 import scrapcraft.registry.ScrapRegistry;
 import scrapcraft.registry.ScrapWorldFeatures;
 
@@ -56,6 +65,18 @@ public class ScrapCraftMod implements ModInitializer {
 		// Register to new biomes afterwards
 		RegistryEntryAddedCallback.event(Registry.BIOME)
 				.register(ScrapCraftMod::checkAndAddToBiome);
+
+		LootTableLoadingCallback.EVENT.register(ScrapCraftMod::modifyFishingRodTable);
+	}
+
+	private static void modifyFishingRodTable(ResourceManager manager, LootManager lootManager, Identifier identifier, FabricLootSupplierBuilder lootSupplierBuilder, LootTableLoadingCallback.LootTableSetter lootTableSetter) {
+		if (identifier.equals(LootTables.FISHING_JUNK_GAMEPLAY)) {
+			FabricLootPoolBuilder poolBuilder = FabricLootPoolBuilder.builder()
+					.withRolls(ConstantLootTableRange.create(1))
+					.withEntry(ItemEntry.builder(ScrapItems.SCRAP));
+
+			lootSupplierBuilder.withPool(poolBuilder);
+		}
 	}
 
 	private static void checkAndAddToBiome(int rawId, Identifier id, Biome biome) {

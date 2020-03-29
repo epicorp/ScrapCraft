@@ -23,27 +23,18 @@
  * THE SOFTWARE.
  */
 
-package scrapcraft.registry;
+package scrapcraft.extension;
 
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.FeatureConfig;
-import scrapcraft.ScrapCraftMod;
-import scrapcraft.feature.ScrapHeapFeature;
-import scrapcraft.feature.ScrapHeapFeatureConfig;
+import net.minecraft.entity.LivingEntity;
+import scrapcraft.util.Submission;
 
-public final class ScrapWorldFeatures {
-	public static final ScrapHeapFeature SCRAP_HEAP_FEATURE = register("scrap_heap", new ScrapHeapFeature(ScrapHeapFeatureConfig::deserialize));
-
-	private static <C extends FeatureConfig, F extends Feature<C>> F register(String path, F feature) {
-		return Registry.register(Registry.FEATURE, ScrapCraftMod.id(path), feature);
-	}
-
-	public static void init() {
-		// NO-OP
-	}
-
-	private ScrapWorldFeatures() {
-		throw new AssertionError("You should not be instantiating this");
+public class ModCompatHooks {
+	/**
+	 * You can inject into this method to handle custom items which allow an entity to be safe from noxious gas.
+	 *
+	 * @param living The entity which potentially may be damaged.
+	 * @param submission An object to submit the result of check to.
+	 */
+	public static void checkItemSafety(LivingEntity living, Submission<Boolean> submission) {
 	}
 }

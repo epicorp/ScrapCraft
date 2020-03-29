@@ -4,6 +4,7 @@
   "package": "scrapcraft.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "DamageSourceAccessor",
     "FireBlockMixin",
     "MaterialBuilderAccessor"
   ],

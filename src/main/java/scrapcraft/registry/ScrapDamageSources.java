@@ -25,25 +25,17 @@
 
 package scrapcraft.registry;
 
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.FeatureConfig;
-import scrapcraft.ScrapCraftMod;
-import scrapcraft.feature.ScrapHeapFeature;
-import scrapcraft.feature.ScrapHeapFeatureConfig;
+import net.minecraft.entity.damage.DamageSource;
+import scrapcraft.damage.GasDamageSource;
 
-public final class ScrapWorldFeatures {
-	public static final ScrapHeapFeature SCRAP_HEAP_FEATURE = register("scrap_heap", new ScrapHeapFeature(ScrapHeapFeatureConfig::deserialize));
-
-	private static <C extends FeatureConfig, F extends Feature<C>> F register(String path, F feature) {
-		return Registry.register(Registry.FEATURE, ScrapCraftMod.id(path), feature);
-	}
+public class ScrapDamageSources {
+	public static final DamageSource NOXIOUS_GAS = new GasDamageSource();
 
 	public static void init() {
 		// NO-OP
 	}
 
-	private ScrapWorldFeatures() {
+	private ScrapDamageSources() {
 		throw new AssertionError("You should not be instantiating this");
 	}
 }

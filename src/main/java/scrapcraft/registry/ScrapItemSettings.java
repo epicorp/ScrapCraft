@@ -31,7 +31,7 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import scrapcraft.ScrapCraftMod;
 
-public class ScrapItemSettings {
+public final class ScrapItemSettings {
 	public static final ItemGroup GROUP = FabricItemGroupBuilder.build(ScrapCraftMod.id("scrapcraft"), () -> new ItemStack(ScrapItems.SCRAP));
 	public static final Item.Settings SCRAP = new Item.Settings().group(GROUP);
 

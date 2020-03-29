@@ -36,6 +36,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.Util;
 import net.minecraft.util.registry.Registry;
 import scrapcraft.ScrapCraftMod;
+import scrapcraft.block.NoxiousGasBlock;
 import scrapcraft.block.ScrapBlock;
 import scrapcraft.block.ScrapSlabBlock;
 import scrapcraft.mixin.MaterialBuilderAccessor;
@@ -46,6 +47,8 @@ public final class ScrapBlocks {
 	public static final Block SCRAP_BLOCK = registerAsScrapLike("scrap_block", new ScrapBlock(SCRAP_SETTINGS), ScrapItemSettings.SCRAP, 3, 2);
 	public static final Block SCRAP_SLAB_BLOCK = registerAsScrapLike("scrap_block_slab", new ScrapSlabBlock(SCRAP_SETTINGS), ScrapItemSettings.SCRAP, 3, 2);
 	public static final Block DENSE_SCRAP_BLOCK = registerAsScrapLike("dense_scrap_block", new ScrapBlock(SCRAP_SETTINGS), ScrapItemSettings.SCRAP, 5, 6);
+
+	public static final Block NOXIOUS_GAS_BLOCK = registerNoItem("noxious_gas", new NoxiousGasBlock(FabricBlockSettings.of(Material.AIR).collidable(false).dropsNothing().build()));
 
 	private static Block registerAsScrapLike(String path, Block block, Item.Settings settings, int burnChance, int spreadChance) {
 		return Util.make(() -> {

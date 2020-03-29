@@ -25,25 +25,20 @@
 
 package scrapcraft.registry;
 
+import net.minecraft.fluid.Fluid;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.FeatureConfig;
 import scrapcraft.ScrapCraftMod;
-import scrapcraft.feature.ScrapHeapFeature;
-import scrapcraft.feature.ScrapHeapFeatureConfig;
 
-public final class ScrapWorldFeatures {
-	public static final ScrapHeapFeature SCRAP_HEAP_FEATURE = register("scrap_heap", new ScrapHeapFeature(ScrapHeapFeatureConfig::deserialize));
-
-	private static <C extends FeatureConfig, F extends Feature<C>> F register(String path, F feature) {
-		return Registry.register(Registry.FEATURE, ScrapCraftMod.id(path), feature);
+public final class ScrapFluids {
+	private static Fluid register(String path, Fluid fluid) {
+		return Registry.register(Registry.FLUID, ScrapCraftMod.id(path), fluid);
 	}
 
 	public static void init() {
 		// NO-OP
 	}
 
-	private ScrapWorldFeatures() {
+	private ScrapFluids() {
 		throw new AssertionError("You should not be instantiating this");
 	}
 }

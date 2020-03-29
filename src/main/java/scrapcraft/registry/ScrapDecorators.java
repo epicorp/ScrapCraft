@@ -32,7 +32,7 @@ import net.minecraft.world.gen.decorator.DecoratorConfig;
 import scrapcraft.ScrapCraftMod;
 import scrapcraft.feature.ScrapHeapDecorator;
 
-public class ScrapDecorators {
+public final class ScrapDecorators {
 	public static final Decorator<CountDecoratorConfig> SCRAP_HEAP = register("scrap_heap", new ScrapHeapDecorator(CountDecoratorConfig::deserialize));
 
 	private static <T extends DecoratorConfig, G extends Decorator<T>> G register(String path, G decorator) {
