@@ -18,10 +18,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "scrapcraft.ScrapCraftMod"
+      "io.github.epicorp.scrapcraft.ScrapCraftMod"
     ],
     "client": [
-      "scrapcraft.client.ScrapCraftClientMod"
+      "io.github.epicorp.scrapcraft.client.ScrapCraftClientMod"
     ]
   },
   "mixins": [
