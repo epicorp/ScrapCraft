@@ -47,7 +47,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 /**
- * a gas block that poisons players when they come in contact with it
+ * a gas block that poisons players when they come in contact with it.
  */
 public class NoxiousGasBlock extends Block {
 	public static final IntProperty EMISSION_DISTANCE = IntProperty.of("emission_distance", 0, 7);
@@ -109,8 +109,9 @@ public class NoxiousGasBlock extends Block {
 			}
 
 			if (!isSafe) {
-				if(ScrapPoisonEvent.EVENT.invoker().isInvulnerable(living))
+				if (ScrapPoisonEvent.EVENT.invoker().isInvulnerable(living)) {
 					isSafe = true;
+				}
 			}
 
 			if (!isSafe) {

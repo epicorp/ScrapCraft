@@ -50,7 +50,7 @@ import io.github.epicorp.scrapcraft.registry.ScrapRegistry;
 import io.github.epicorp.scrapcraft.registry.ScrapWorldFeatures;
 
 public class ScrapCraftMod implements ModInitializer {
-	public static final String MODID = "io/github/epicorp/scrapcraft";
+	public static final String MODID = "scrapcraft";
 	public static final Logger LOGGER = LogManager.getLogger(ScrapCraftMod.class);
 
 	@Override
@@ -91,14 +91,10 @@ public class ScrapCraftMod implements ModInitializer {
 	}
 
 	private static void addFeature(Biome biome) {
-		biome.addFeature(
-		GenerationStep.Feature.LOCAL_MODIFICATIONS,
-		ScrapWorldFeatures.SCRAP_HEAP_FEATURE.configure(
-						new ScrapHeapFeatureConfig(ScrapBlocks.DENSE_SCRAP_BLOCK.getDefaultState(), 0)
-				).createDecoratedFeature(
-		ScrapDecorators.SCRAP_HEAP.configure(new CountDecoratorConfig(2))
-				)
-		);
+		biome
+				.addFeature(GenerationStep.Feature.LOCAL_MODIFICATIONS, ScrapWorldFeatures.SCRAP_HEAP_FEATURE
+					.configure(new ScrapHeapFeatureConfig(ScrapBlocks.DENSE_SCRAP_BLOCK.getDefaultState(), 0))
+					.createDecoratedFeature(ScrapDecorators.SCRAP_HEAP.configure(new CountDecoratorConfig(2))));
 	}
 
 	public static Identifier id(String path) {

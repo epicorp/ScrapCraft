@@ -55,9 +55,6 @@ dependencies {
 
 	// https://mvnrepository.com/artifact/org.jetbrains/annotations
 	compile group: 'org.jetbrains', name: 'annotations', version: '19.0.0'
-
-	// add RRP for cleanup
-	modCompile group: 'net.devtech', name: 'rrp', version: '2.0.2'
 }
 
 processResources {
