@@ -25,7 +25,7 @@
 
 package io.github.epicorp.scrapcraft.block;
 
-import io.github.epicorp.scrapcraft.api.ScrapNoxiousResistanceCallback;
+import io.github.epicorp.scrapcraft.api.ScrapPoisonEvent;
 import io.github.epicorp.scrapcraft.item.NoxiousGasFilter;
 import io.github.epicorp.scrapcraft.registry.ScrapDamageSources;
 import net.minecraft.block.Block;
@@ -46,6 +46,9 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
+/**
+ * a gas block that poisons players when they come in contact with it
+ */
 public class NoxiousGasBlock extends Block {
 	public static final IntProperty EMISSION_DISTANCE = IntProperty.of("emission_distance", 0, 7);
 
@@ -106,7 +109,7 @@ public class NoxiousGasBlock extends Block {
 			}
 
 			if (!isSafe) {
-				if(!ScrapNoxiousResistanceCallback.EVENT.invoker().isVulnerable(living))
+				if(ScrapPoisonEvent.EVENT.invoker().isInvulnerable(living))
 					isSafe = true;
 			}
 
